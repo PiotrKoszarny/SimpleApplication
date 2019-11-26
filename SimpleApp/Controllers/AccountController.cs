@@ -28,7 +28,7 @@ namespace SimpleApp.Controllers
         [HttpPost]
         [Route("register")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
+        public async Task<ActionResult<bool>> Register(RegisterViewModel registerViewModel)
         {
             var registerCommand = new RegisterUserCommand
             {
@@ -38,7 +38,7 @@ namespace SimpleApp.Controllers
             };
 
             var result = await _commandDispatcher.Execute<RegisterUserCommand, RegisterUserCommandResult>(registerCommand);
-            return Ok(result);
+            return Ok(result.Result);
         }
     }
 }

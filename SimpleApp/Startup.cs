@@ -13,6 +13,8 @@ using SimpleApp.DataAccess;
 using Microsoft.AspNetCore.Mvc;
 using SimpleApp.DataAccess.Entity;
 using SimpleApp.Infrastructure.CQRS;
+using SimpleApp.Infrastructure.CQRS.Command;
+using SimpleApp.Infrastructure.CQRS.Query;
 
 namespace SimpleApp
 {
@@ -36,7 +38,13 @@ namespace SimpleApp
                 .AddEntityFrameworkStores<SimpleDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddMvc();
+
+            services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+
+
+            services.AddScoped<IQueryDispatcher, DefaultQueryDispatcher>();
+            services.AddScoped<ICommandDispatcher, DefaultCommandDispatcher>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,11 +57,19 @@ namespace SimpleApp
             else
             {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                //app.UseHsts();
             }
-
+            app.UseRouting();
+            app.UseCors("AllowAll");
             app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseEndpoints(endpoints =>
+            {
+                // Mapping of endpoints goes here:
+                endpoints.MapControllers();
+                //endpoints.MapRazorPages();
+                //endpoints.MapHub<MyChatHub>()
+                //endpoints.MapGrpcService<MyCalculatorService>()
+            });
         }
     }
 }

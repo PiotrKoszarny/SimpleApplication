@@ -4,10 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SimpleApp.DataAccess.Entity;
 
 namespace SimpleApp.DataAccess
 {
-    public class SimpleDbContext : IdentityDbContext
+    public class SimpleDbContext : IdentityDbContext<ApplicationUser>
     {
         public SimpleDbContext(DbContextOptions<SimpleDbContext> options) : base(options)
         {
