@@ -26,19 +26,14 @@ export class RegistrationComponent implements OnInit {
   }
 
   public async onSubmit() {
-    console.log('submit')
-
     const register = <User>{
       email: this.registerForm.get('email').value,
       password: this.registerForm.get('password').value,
       confirmPassword: this.registerForm.get('confirmPassword').value,
     }
-console.log(register);
-
     const result = await this.userService.register(register)
     console.log(result);
-    
-    
+
   }
 
   private checkPasswords(group: FormGroup) {

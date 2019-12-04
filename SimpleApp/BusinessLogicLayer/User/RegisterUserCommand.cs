@@ -29,7 +29,7 @@ namespace SimpleApp.BusinessLogicLayer.User
             _userManager = userManager;
         }
 
-        public async Task<RegisterUserCommandResult> Execute(RegisterUserCommand command)
+        public async Task<RegisterUserCommandResult> ExecuteAsync(RegisterUserCommand command)
         {
             var user = new ApplicationUser
             {

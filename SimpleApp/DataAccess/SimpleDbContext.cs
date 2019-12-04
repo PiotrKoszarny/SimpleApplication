@@ -19,5 +19,8 @@ namespace SimpleApp.DataAccess
         {
             base.OnModelCreating(builder);
         }
+
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Car> Cars { get; set; }
     }
 }

@@ -37,7 +37,7 @@ namespace SimpleApp.Controllers
                 Email = registerViewModel.Email
             };
 
-            var result = await _commandDispatcher.Execute<RegisterUserCommand, RegisterUserCommandResult>(registerCommand);
+            var result = await _commandDispatcher.ExecuteAsync<RegisterUserCommand, RegisterUserCommandResult>(registerCommand);
             return Ok(result.Result);
         }
     }
