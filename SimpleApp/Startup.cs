@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.OpenApi.Models;
 using SimpleApp.DataAccess;
-using Microsoft.AspNetCore.Mvc;
 using SimpleApp.DataAccess.Entity;
 using SimpleApp.Infrastructure.CQRS;
 using SimpleApp.Infrastructure.CQRS.Command;
 using SimpleApp.Infrastructure.CQRS.Query;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace SimpleApp
 {
@@ -42,6 +38,10 @@ namespace SimpleApp
 
             services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            });
 
             services.AddScoped<IQueryDispatcher, DefaultQueryDispatcher>();
             services.AddScoped<ICommandDispatcher, DefaultCommandDispatcher>();
@@ -61,7 +61,7 @@ namespace SimpleApp
             }
             app.UseRouting();
             app.UseCors("AllowAll");
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseEndpoints(endpoints =>
             {
                 // Mapping of endpoints goes here:
@@ -69,6 +69,13 @@ namespace SimpleApp
                 //endpoints.MapRazorPages();
                 //endpoints.MapHub<MyChatHub>()
                 //endpoints.MapGrpcService<MyCalculatorService>()
+            });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = string.Empty;
             });
         }
     }

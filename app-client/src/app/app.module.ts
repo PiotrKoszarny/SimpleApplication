@@ -6,12 +6,13 @@ import { RegistrationComponent } from './registration/registration.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatFormFieldModule, MatInputModule, MatIconModule } from '@angular/material'
+import { MatFormFieldModule, MatInputModule, MatIconModule } from '@angular/material';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RegistrationComponent
+    RegistrationComponent,
   ],
   imports: [
     BrowserModule,
@@ -22,6 +23,7 @@ import { MatFormFieldModule, MatInputModule, MatIconModule } from '@angular/mate
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
+    MatSidenavModule
   ],
   providers: [],
   bootstrap: [AppComponent]

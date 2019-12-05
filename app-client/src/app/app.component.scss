@@ -1,0 +1,33 @@
+.container{
+    height: 100%;
+    width: 100%;
+    .nav-bar{
+        width: 290px;
+        
+        .nav-content-btn{
+            transition: height 0.2s ease-in-out;
+            overflow: auto;
+
+            ul{
+                margin: 0;
+                padding: 0;
+
+                li{
+                    padding: 5px;
+                    background-color: rgba(0, 0, 0, 0.5);
+                    list-style: none;
+                    cursor: pointer;
+                }
+                li:hover{
+                    background-color: rgba(0, 0, 0, 0.6);
+                }
+            }
+
+        }
+    }
+
+    .main-section{
+        padding: 0 10px;
+        width: calc(100% - 310px);
+    }
+}

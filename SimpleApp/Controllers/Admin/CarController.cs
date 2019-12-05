@@ -22,7 +22,7 @@ namespace SimpleApp.Controllers.Admin
 
         [HttpPost]
         [Route("create-car")]
-        public async Task<ActionResult<AddCarCommandResult>> CreateCarAsync(AddCarCommand request)
+        public async Task<ActionResult<AddCarCommandResult>> CreateCarAsync([FromBody]AddCarCommand request)
         {
             var result = await _commandDispatcher.ExecuteAsync<AddCarCommand, AddCarCommandResult>(request);
             return Ok(result);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SimpleApp.DataAccess;
 using SimpleApp.Infrastructure.CQRS.Command;
 
 namespace SimpleApp.BusinessLogicLayer.Car.Command
@@ -22,11 +23,11 @@ namespace SimpleApp.BusinessLogicLayer.Car.Command
         public double Mileage { get; set; }
     }
 
-    public class RegisterUserCommandHandler : ICommandHandler<AddCarCommand, AddCarCommandResult>
+    public class AddCarCommanHandler : ICommandHandler<AddCarCommand, AddCarCommandResult>
     {
-        private readonly DbContext _dbContext;
+        private readonly SimpleDbContext _dbContext;
 
-        public RegisterUserCommandHandler(DbContext dbContext)
+        public AddCarCommanHandler(SimpleDbContext dbContext)
         {
             _dbContext = dbContext;
         }

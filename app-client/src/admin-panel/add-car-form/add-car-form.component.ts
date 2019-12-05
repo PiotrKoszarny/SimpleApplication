@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Car } from 'src/app/models/Car';
 import { CarService } from '../services/car.service';
 
@@ -9,34 +9,33 @@ import { CarService } from '../services/car.service';
   styleUrls: ['./add-car-form.component.scss']
 })
 export class AddCarFormComponent implements OnInit {
-  addCarForm: any;
+  addCarForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
     private carService: CarService
-  ) {
+  ) { }
+
+  ngOnInit() {
     this.addCarForm = this.formBuilder.group({
       'brand': [''],
       'model': [''],
       'productionDate': [''],
-      'mileage': [''],
+      'mileage': ['']
     })
   }
 
-  ngOnInit() {
-  }
-
-  public async addCar() {
+  public async onSubmit() {
     const car = <Car>{
       brand: this.addCarForm.get('brand').value,
       model: this.addCarForm.get('model').value,
       productionDate: this.addCarForm.get('productionDate').value,
-      mileage: this.addCarForm.get('mileage').value,
+      mileage: parseInt(this.addCarForm.get('mileage').value),
     }
+console.log(car);
 
     const result = await this.carService.addCar(car);
     console.log(result);
-
   }
 
 }

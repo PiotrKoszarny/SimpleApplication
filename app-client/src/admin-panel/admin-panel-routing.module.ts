@@ -6,18 +6,10 @@ import { HomepageComponent } from './homepage/homepage.component';
 
 const adminRoutes: Routes = [
   {
-    path: '',
-    component: HomepageComponent,
-    children: [{
-      path: '',
-      // canActivateChild:[AtuthGuard]
-      children: [
-        {
-          path: 'add-car',
-          component: AddCarFormComponent
-        }
-      ]
-    }]
+    path: '', component: HomepageComponent
+  },
+  {
+    path: 'add-car', component: AddCarFormComponent
   }
 ];
 

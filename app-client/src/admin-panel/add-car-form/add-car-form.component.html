@@ -1,2 +1,22 @@
-<p>add-car-form works!</p>
-<h2>taks</h2>
+<section>
+    <h2>Add car</h2>
+    <form [formGroup]="addCarForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+            <input matInput placeholder="Enter brand" formControlName="brand" required>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Enter model" formControlName="model" required>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput [matDatepicker]="picker" formControlName="productionDate" placeholder="Choose a production date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Enter mileage [km]" formControlName="mileage" required>
+        </mat-form-field>
+        <button mat-stroked-button color="primary" type="submit" [disabled]="!addCarForm.valid">Add car</button>
+    </form>
+</section>
