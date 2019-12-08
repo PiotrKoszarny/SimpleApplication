@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SimpleApp.Infrastructure.CQRS.Query
@@ -11,7 +9,7 @@ namespace SimpleApp.Infrastructure.CQRS.Query
 
     public interface IQueryDispatcher
     {
-        Task<TQueryResult> Execute<TQuery, TQueryResult>(TQuery query)
+        Task<TQueryResult> ExecuteAsync<TQuery, TQueryResult>(TQuery query)
             where TQuery : class, IQuery
             where TQueryResult : class, IQueryResult, new();
     }
@@ -32,7 +30,7 @@ namespace SimpleApp.Infrastructure.CQRS.Query
             this._service = service;
         }
 
-        public async Task<TQueryResult> Execute<TQuery, TQueryResult>(TQuery query)
+        public async Task<TQueryResult> ExecuteAsync<TQuery, TQueryResult>(TQuery query)
             where TQuery : class, IQuery
             where TQueryResult : class, IQueryResult, new()
         {
