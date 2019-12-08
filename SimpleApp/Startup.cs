@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using GreenPipes;
+using MassTransit;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +12,7 @@ using SimpleApp.DataAccess.Entity;
 using SimpleApp.Infrastructure.CQRS;
 using SimpleApp.Infrastructure.CQRS.Command;
 using SimpleApp.Infrastructure.CQRS.Query;
+using SimpleApp.IOC;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace SimpleApp
@@ -26,7 +29,6 @@ namespace SimpleApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.InstallBussinessLogicHandlers();
             services.AddDbContext<SimpleDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("SimpleDbConnection")));
 
@@ -34,17 +36,19 @@ namespace SimpleApp
                 .AddEntityFrameworkStores<SimpleDbContext>()
                 .AddDefaultTokenProviders();
 
+            //services.RegisterMassTransit();
+
             services.AddMvc();
 
-            services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+            services.AddCors(options => options.AddPolicy("AllowAll",
+                p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
 
-            services.AddScoped<IQueryDispatcher, DefaultQueryDispatcher>();
-            services.AddScoped<ICommandDispatcher, DefaultCommandDispatcher>();
+            services.RegisterCqrsHandler();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,14 +65,10 @@ namespace SimpleApp
             }
             app.UseRouting();
             app.UseCors("AllowAll");
-            //app.UseHttpsRedirection();
             app.UseEndpoints(endpoints =>
             {
                 // Mapping of endpoints goes here:
                 endpoints.MapControllers();
-                //endpoints.MapRazorPages();
-                //endpoints.MapHub<MyChatHub>()
-                //endpoints.MapGrpcService<MyCalculatorService>()
             });
 
             app.UseSwagger();

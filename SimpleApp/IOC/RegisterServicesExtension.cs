@@ -1,17 +1,25 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using SimpleApp.Infrastructure.CQRS.Command;
 using SimpleApp.Infrastructure.CQRS.Query;
 
-namespace SimpleApp.Infrastructure.CQRS
+namespace SimpleApp.IOC
 {
-    public static class CqrsRegister
+    public static class RegisterServicesExtension
     {
-        public static void RegisterQueryHandler(IEnumerable<Assembly> assemblies, IServiceCollection services)
+        public static void RegisterCqrsHandler(this IServiceCollection services)
+        {
+            services.InstallBussinessLogicHandlers();
+            services.AddScoped<IQueryDispatcher, DefaultQueryDispatcher>();
+            services.AddScoped<ICommandDispatcher, DefaultCommandDispatcher>();
+        }
+
+
+        private static void RegisterQueryHandler(IEnumerable<Assembly> assemblies, IServiceCollection services)
         {
             services.Scan(x =>
             {
@@ -22,7 +30,7 @@ namespace SimpleApp.Infrastructure.CQRS
             });
         }
 
-        public static void RegisterCommandHandler(IEnumerable<Assembly> assemblies, IServiceCollection services)
+        private static void RegisterCommandHandler(IEnumerable<Assembly> assemblies, IServiceCollection services)
         {
             services.Scan(x =>
             {
@@ -33,7 +41,7 @@ namespace SimpleApp.Infrastructure.CQRS
             });
         }
 
-        public static void InstallBussinessLogicHandlers(this IServiceCollection services)
+        private static void InstallBussinessLogicHandlers(this IServiceCollection services)
         {
             var assemblies = new List<Assembly> { Assembly.GetExecutingAssembly() };
 
