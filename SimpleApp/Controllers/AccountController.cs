@@ -64,17 +64,18 @@ namespace SimpleApp.Controllers
             {
                 Email = loginResult.Email,
                 UserId = loginResult.UserId,
-                IsSuccessed = loginResult.IsSucceeded
+                IsSuccessed = loginResult.IsSucceeded,
+                IsLocked = loginResult.IsLocked
             };
 
-            if (loginResult.IsSucceeded)
+            if (!loginResult.IsSucceeded || loginResult.IsLocked) 
             {
-                result.Token = _userService.GenerateToken(loginResult.Email);
-
                 return result;
             }
 
-            return null;
+            result.Token = _userService.GenerateToken(loginResult.Email);
+            return result;
+
         }
     }
 }

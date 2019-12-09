@@ -4,12 +4,12 @@ import { AuthenticationService } from '../services/authentication.service';
 import { User } from '../models/User';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-sign-in',
+  templateUrl: './sign-in.component.html',
+  styleUrls: ['./sign-in.component.scss']
 })
-export class LoginComponent implements OnInit {
-  public loginForm: FormGroup;
+export class SignInComponent implements OnInit {
+  public signInForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -17,20 +17,20 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loginForm = this.formBuilder.group({
+    this.signInForm = this.formBuilder.group({
       email: ['', Validators.compose([Validators.required])],
       password: ['', [Validators.required, Validators.minLength(2)]]
     });
   }
 
-  private get form() { return this.loginForm.controls }
+  private get form() { return this.signInForm.controls }
 
-  async login() {
+  async signIn() {
     const user = <User>{
       email: this.form.email.value,
       password: this.form.password.value
     }
 
-    await this.userService.login(user);
+    await this.userService.signIn(user);
   }
 }

@@ -15,8 +15,8 @@ export class AuthenticationService {
     return this.httpClient.post<boolean>(`${apiUrl}/account/register`, user).toPromise();
   }
 
-  login(user: User): Promise<any> {
-    return this.httpClient.post<any>(`${apiUrl}/account/login`, user)
+  signIn(user: User): Promise<any> {
+    return this.httpClient.post<any>(`${apiUrl}/account/SignIn`, user)
       .pipe(
         map(response => {
           console.log(response);

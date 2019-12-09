@@ -1,20 +1,8 @@
-<mat-sidenav-container class="container">
-    <mat-sidenav mode="side" opened class="nav-bar">
-        <nav class="nav-content-btn">
-            <button>
-                <a>Admin panel</a>
-            </button>
-            <ul>
-                <li routerLink="/admin-panel">
-                    <a>Dashboard</a>
-                </li>
-                <li routerLink="/admin-panel/add-car">
-                    <a>Add car</a>
-                </li>
-            </ul>
-        </nav>
-    </mat-sidenav>
-    <mat-sidenav-content class="main-section">
+<div class="container">
+    <div>
+        <app-nav></app-nav>
+    </div>
+    <div>
         <router-outlet></router-outlet>
-    </mat-sidenav-content>
-</mat-sidenav-container>
+    </div>
+</div>

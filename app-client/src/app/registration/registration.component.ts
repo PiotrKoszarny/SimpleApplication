@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../services/authentication.service';
 import { User } from '../models/User';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-registration',
@@ -13,7 +14,8 @@ export class RegistrationComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private userService: AuthenticationService
+    private userService: AuthenticationService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -32,8 +34,11 @@ export class RegistrationComponent implements OnInit {
       confirmPassword: this.registerForm.get('confirmPassword').value,
     }
     const result = await this.userService.register(register)
-    console.log(result);
-
+    if (result) {
+      this.toastr.success('Registration successful')
+    } else {
+      this.toastr.error('Something gone wrong!')
+    }
   }
 
   private checkPasswords(group: FormGroup) {

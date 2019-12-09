@@ -8,13 +8,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule, MatInputModule, MatIconModule } from '@angular/material';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import { LoginComponent } from './login/login.component';
+import { SignInComponent } from './signIn/sign-in.component';
+import { HomeComponent } from './home/home.component';
+import { NavComponent } from './nav/nav.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegistrationComponent,
-    LoginComponent,
+    SignInComponent,
+    HomeComponent,
+    NavComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,7 +30,8 @@ import { LoginComponent } from './login/login.component';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatSidenavModule
+    MatSidenavModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

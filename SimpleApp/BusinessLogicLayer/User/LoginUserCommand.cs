@@ -16,6 +16,7 @@ namespace SimpleApp.BusinessLogicLayer.User
         public string UserId { get; set; }
         public string Email { get; set; }
         public bool IsSucceeded { get; set; }
+        public bool IsLocked { get; set; }
         public string ErrorMessage { get; set; }
     }
 
@@ -50,16 +51,16 @@ namespace SimpleApp.BusinessLogicLayer.User
                     UserId = appUser.Id
                 };
             }
-            else if (result.IsLockedOut)
+
+            if (result.IsLockedOut)
             {
-                // ToDO: Add info
-                return null;
+                return new LoginUserCommandResult
+                {
+                    IsLocked = true
+                };
             }
-            else
-            {
-                // ToDO: Add info
-                return null;
-            }
+
+            return null;
         }
     }
 }

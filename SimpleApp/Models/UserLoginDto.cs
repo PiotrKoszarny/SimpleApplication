@@ -13,6 +13,7 @@ namespace SimpleApp.Models
         public string UserId { get; set; }
         public string Email { get; set; }
         public bool IsSuccessed { get; set; }
+        public bool IsLocked { get; set; }
         public string LoginError { get; set; }
         public string Token { get; set; }
     }
