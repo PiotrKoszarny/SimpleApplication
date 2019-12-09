@@ -33,7 +33,7 @@ namespace SimpleApp.Controllers
         [HttpPost]
         [Route("register")]
         [AllowAnonymous]
-        public async Task<ActionResult<bool>> Register(RegisterViewModel registerViewModel)
+        public async Task<ActionResult<bool>> Register([FromBody]RegisterViewModel registerViewModel)
         {
             var command = new RegisterUserCommand
             {
@@ -47,9 +47,9 @@ namespace SimpleApp.Controllers
         }
 
         [HttpPost]
-        [Route("login")]
+        [Route("sign-in")]
         [AllowAnonymous]
-        public async Task<ActionResult<UserLoginResultDto>> Login(UserLoginDto user)
+        public async Task<ActionResult<UserLoginResultDto>> SignIn([FromBody]UserLoginDto user)
         {
             var command = new LoginUserCommand
             {

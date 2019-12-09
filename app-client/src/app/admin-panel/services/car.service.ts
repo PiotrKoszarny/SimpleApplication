@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Car } from 'src/app/models/Car';
-import { apiUrl } from 'src/app/config';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +19,6 @@ export class CarService {
   }
 
   public addCar(car: Car): Promise<Car> {
-    return this.httpClient.post<Car>(`${apiUrl}/admin/car/create-car`, car, this.httpOptions).toPromise();
+    return this.httpClient.post<Car>(`${environment.basePath}/admin/car/create-car`, car, this.httpOptions).toPromise();
   }
 }
