@@ -31,6 +31,6 @@ export class SignInComponent implements OnInit {
       password: this.form.password.value
     }
 
-    await this.userService.signIn(user);
+    const result = await this.userService.signIn(user);
   }
 }

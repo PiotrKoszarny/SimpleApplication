@@ -1,6 +1,6 @@
 <section>
     <h2>Sign in</h2>
-    <form [formGroup]="SignInForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="signInForm" (ngSubmit)="signIn()">
         <mat-form-field>
             <input matInput placeholder="Enter your email" formControlName="email" required>
             <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
@@ -14,6 +14,6 @@
                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
         </mat-form-field>
-        <button mat-stroked-button color="primary" type="submit" [disabled]="!SignInForm.valid">Sign in</button>
+        <button mat-stroked-button color="primary" type="submit" [disabled]="!signInForm.valid">Sign in</button>
     </form>
 </section>
