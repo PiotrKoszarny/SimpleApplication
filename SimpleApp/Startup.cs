@@ -38,6 +38,7 @@ namespace SimpleApp
 
             //services.RegisterMassTransit();
 
+            services.AddAuthenticationExtension(Configuration);
             services.AddMvc();
 
             services.AddCors(options => options.AddPolicy("AllowAll",

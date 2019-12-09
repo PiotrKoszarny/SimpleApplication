@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from '../services/user.service';
+import { AuthenticationService } from '../services/authentication.service';
 import { User } from '../models/User';
 
 @Component({
@@ -13,7 +13,7 @@ export class RegistrationComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private userService: UserService
+    private userService: AuthenticationService
   ) { }
 
   ngOnInit() {
@@ -25,7 +25,7 @@ export class RegistrationComponent implements OnInit {
       { validator: this.checkPasswords });
   }
 
-  public async onSubmit() {
+  public async register() {
     const register = <User>{
       email: this.registerForm.get('email').value,
       password: this.registerForm.get('password').value,

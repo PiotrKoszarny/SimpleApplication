@@ -1,6 +1,6 @@
 <section>
     <h2>Register</h2>
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
         <mat-form-field>
             <input matInput placeholder="Enter your email" formControlName="email" required>
             <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
