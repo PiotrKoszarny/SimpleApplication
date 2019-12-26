@@ -12,6 +12,8 @@ namespace SimpleApp.BusinessLogicLayer.Car.Command
         public string Model { get; set; }
         public DateTime ProductionDate { get; set; }
         public double Mileage { get; set; }
+        public string CarPhotoPath { get; set; }
+        public byte[] CarPhoto { get; set; }
     }
 
     public class AddCarCommandResult : ICommandResult

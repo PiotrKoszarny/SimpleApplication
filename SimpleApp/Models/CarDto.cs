@@ -1,16 +1,17 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace SimpleApp.DataAccess.Entity
+namespace SimpleApp.Models
 {
-    public class Car
+    public class CarDto
     {
         public int CarId { get; set; }
         public string Brand { get; set; }
         public string Model { get; set; }
-        [Column(TypeName = "Date")]
         public DateTime ProductionDate { get; set; }
         public double Mileage { get; set; }
-        public string FilePath { get; set; }
+        //public int MyProperty { get; set; }
     }
 }

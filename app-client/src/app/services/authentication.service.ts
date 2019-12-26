@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../models/User';
+import { User } from '../base/models/User';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { UserLoginApiResult } from '../models/UserLoginApiResult';
+import { UserLoginApiResult } from '../base/models/UserLoginApiResult';
 
 @Injectable({
   providedIn: 'root'

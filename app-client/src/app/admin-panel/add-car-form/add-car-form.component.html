@@ -18,5 +18,6 @@
             <input matInput placeholder="Enter mileage [km]" formControlName="mileage" required>
         </mat-form-field>
         <button mat-stroked-button color="primary" type="submit" [disabled]="!addCarForm.valid">Add car</button>
+        <app-drag-file (fileUploaded)="onFileUploaded($event)"></app-drag-file>
     </form>
 </section>

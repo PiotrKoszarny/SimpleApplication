@@ -5,6 +5,8 @@ import { AddCarFormComponent } from './add-car-form/add-car-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminPanelRoutingModule } from './admin-panel-routing.module';
 import { MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
+import { DragFileComponent } from './drag-file/drag-file.component';
+import { DragDropDirective } from './drag-file/DragDropDirective';
 
 @NgModule({
   imports: [
@@ -19,7 +21,9 @@ import { MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateM
   ],
   declarations: [
     HomepageComponent,
-    AddCarFormComponent
+    AddCarFormComponent,
+    DragFileComponent,
+    DragDropDirective
   ],
   providers: [
     // {provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true}}
