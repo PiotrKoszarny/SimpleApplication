@@ -5,5 +5,5 @@ export interface AddCarDto{
     model: string;
     productionDate: Date;
     mileage: number;
-    photoFile: ImgFile;
+    photos: ImgFile[];
 }

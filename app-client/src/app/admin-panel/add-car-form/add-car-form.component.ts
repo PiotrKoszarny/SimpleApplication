@@ -37,10 +37,8 @@ export class AddCarFormComponent implements OnInit {
       model: this.addCarForm.get('model').value,
       productionDate: this.addCarForm.get('productionDate').value,
       mileage: parseInt(this.addCarForm.get('mileage').value),
-
+      photos: this.imgFiles,
     }
-    console.log(car);
-
     const result = await this.carService.addCar(car);
     console.log(result);
   }

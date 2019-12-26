@@ -12,6 +12,6 @@ namespace SimpleApp.Models
         public string Model { get; set; }
         public DateTime ProductionDate { get; set; }
         public double Mileage { get; set; }
-        //public int MyProperty { get; set; }
+        public IEnumerable<ImgFileDto> Photos { get; set; }
     }
 }
