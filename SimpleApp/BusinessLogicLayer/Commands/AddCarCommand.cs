@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using SimpleApp.DataAccess;
 using SimpleApp.Infrastructure.CQRS.Command;
+using SimpleApp.Models;
 
 namespace SimpleApp.BusinessLogicLayer.Car.Command
 {
@@ -14,6 +17,7 @@ namespace SimpleApp.BusinessLogicLayer.Car.Command
         public double Mileage { get; set; }
         public string CarPhotoPath { get; set; }
         public byte[] CarPhoto { get; set; }
+        public IEnumerable<ImgFileDto> Photos { get; set; }
     }
 
     public class AddCarCommandResult : ICommandResult
@@ -28,10 +32,15 @@ namespace SimpleApp.BusinessLogicLayer.Car.Command
     public class AddCarCommanHandler : ICommandHandler<AddCarCommand, AddCarCommandResult>
     {
         private readonly SimpleDbContext _dbContext;
+        private readonly string _photosPath;
 
-        public AddCarCommanHandler(SimpleDbContext dbContext)
+        public AddCarCommanHandler(
+            SimpleDbContext dbContext,
+            IConfiguration configuration)
         {
             _dbContext = dbContext;
+            _photosPath = configuration.GetValue<string>("PhtotPath");
+
         }
 
         public async Task<AddCarCommandResult> ExecuteAsync(AddCarCommand command)
@@ -45,6 +54,15 @@ namespace SimpleApp.BusinessLogicLayer.Car.Command
             };
 
             await _dbContext.AddAsync(car);
+
+            car.FilePath = $@"{_photosPath}/{car.CarId}";
+
+
+            foreach (var item in command.Photos)
+            {
+                System.IO.File.WriteAllBytes(car.FilePath, item.Value);
+            }
+
             await _dbContext.SaveChangesAsync();
 
             return new AddCarCommandResult

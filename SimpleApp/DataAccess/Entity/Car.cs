@@ -1,10 +1,12 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SimpleApp.DataAccess.Entity
 {
     public class Car
     {
+        [Key]
         public int CarId { get; set; }
         public string Brand { get; set; }
         public string Model { get; set; }

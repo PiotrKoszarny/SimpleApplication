@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
 
 namespace SimpleApp.Models
 {
@@ -10,7 +10,7 @@ namespace SimpleApp.Models
 
     public class UserLoginResultDto
     {
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
         public string Email { get; set; }
         public bool IsSuccessed { get; set; }
         public bool IsLocked { get; set; }

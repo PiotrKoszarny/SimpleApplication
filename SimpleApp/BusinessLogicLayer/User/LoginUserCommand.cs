@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using SimpleApp.DataAccess.Entity;
 using SimpleApp.Infrastructure.CQRS.Command;
@@ -13,7 +14,7 @@ namespace SimpleApp.BusinessLogicLayer.User
 
     public class LoginUserCommandResult : ICommandResult
     {
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
         public string Email { get; set; }
         public bool IsSucceeded { get; set; }
         public bool IsLocked { get; set; }

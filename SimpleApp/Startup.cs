@@ -14,6 +14,7 @@ using SimpleApp.Infrastructure.CQRS.Command;
 using SimpleApp.Infrastructure.CQRS.Query;
 using SimpleApp.IOC;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
 
 namespace SimpleApp
 {
@@ -32,9 +33,9 @@ namespace SimpleApp
             services.AddDbContext<SimpleDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("SimpleDbConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<SimpleDbContext>()
-                .AddDefaultTokenProviders();
+            services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
+                    .AddEntityFrameworkStores<SimpleDbContext>()
+                    .AddDefaultTokenProviders();
 
             //services.RegisterMassTransit();
 

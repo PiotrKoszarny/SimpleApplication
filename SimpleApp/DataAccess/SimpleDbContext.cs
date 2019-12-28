@@ -1,14 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using SimpleApp.DataAccess.Entity;
+using Microsoft.AspNetCore.Identity;
 
 namespace SimpleApp.DataAccess
 {
-    public class SimpleDbContext : IdentityDbContext<ApplicationUser>
+    public class SimpleDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
         public SimpleDbContext(DbContextOptions<SimpleDbContext> options) : base(options)
         {

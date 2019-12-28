@@ -22,11 +22,6 @@ namespace SimpleApp.Controllers.Admin
         [Route("create-car")]
         public async Task<ActionResult<AddCarCommandResult>> CreateCarAsync([FromBody]CarDto request)
         {
-            foreach (var item in request.Photos)
-            {
-                System.IO.File.WriteAllBytes(item.FileName, item.Value); 
-            }
-
             var command = new AddCarCommand
             {
                 Brand = request.Brand,
@@ -35,6 +30,7 @@ namespace SimpleApp.Controllers.Admin
                 ProductionDate = request.ProductionDate
             };
             var result = await _commandDispatcher.ExecuteAsync<AddCarCommand, AddCarCommandResult>(command);
+
             return Ok(result);
         }
     }
