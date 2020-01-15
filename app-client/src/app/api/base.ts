@@ -79,7 +79,11 @@ export class CarService {
 
     public async postCreateCar(data: CarDto): Promise<any> {
 
-        return this.httpClient.post<any>(this.apiBaseUrl + '/admin/Car/create-car', data).toPromise();
+        return this.httpClient.post<any>(this.apiBaseUrl + '/Car/admin/create-car', data).toPromise();
+    }
+
+    public async getCars(): Promise<any> {
+        return this.httpClient.get<any>(this.apiBaseUrl + '/Car/cars').toPromise();
     }
 
 }

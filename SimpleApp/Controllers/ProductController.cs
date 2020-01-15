@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SimpleApp.BusinessLogicLayer.Queries;
-using SimpleApp.Infrastructure.CQRS.Command;
-using SimpleApp.Infrastructure.CQRS.Query;
 using SimpleApp.Models;
 
 namespace SimpleApp.Controllers
@@ -13,31 +11,21 @@ namespace SimpleApp.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly ICommandDispatcher _commandDispatcher;
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IMediator _mediator;
 
         public ProductController(
-            ICommandDispatcher commandDispatcher,
-            IQueryDispatcher queryDispatcher)
+            IMediator mediator)
         {
-            _commandDispatcher = commandDispatcher;
-            _queryDispatcher = queryDispatcher;
+            _mediator = mediator;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<CarDto>> GetOffers()
+        public async Task<ActionResult<IEnumerable<CarDto>>> GetOffers()
         {
             var query = new GetCarsQuery();
-            var result = await _queryDispatcher.ExecuteAsync<GetCarsQuery, GetCarsQueryResult>(query);
+            var result = await _mediator.Send(query);
 
-            return result.Cars.Select(x => new CarDto
-            {
-                Brand = x.Brand,
-                CarId = x.CarId,
-                Mileage = x.Mileage,
-                Model = x.Model,
-                ProductionDate = x.ProductionDate
-            });
+            return Ok(result);
         }
     }
 }

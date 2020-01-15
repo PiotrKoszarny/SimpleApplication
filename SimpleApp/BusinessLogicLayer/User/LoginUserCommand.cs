@@ -1,18 +1,19 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using SimpleApp.DataAccess.Entity;
-using SimpleApp.Infrastructure.CQRS.Command;
 
 namespace SimpleApp.BusinessLogicLayer.User
 {
-    public class LoginUserCommand : ICommand
+    public class LoginUserCommand : IRequest<LoginUserCommandResult>
     {
         public string Email { get; set; }
         public string Password { get; set; }
     }
 
-    public class LoginUserCommandResult : ICommandResult
+    public class LoginUserCommandResult
     {
         public Guid UserId { get; set; }
         public string Email { get; set; }
@@ -21,7 +22,7 @@ namespace SimpleApp.BusinessLogicLayer.User
         public string ErrorMessage { get; set; }
     }
 
-    public class LoginUserCommandHandler : ICommandHandler<LoginUserCommand, LoginUserCommandResult>
+    public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, LoginUserCommandResult>
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -34,20 +35,20 @@ namespace SimpleApp.BusinessLogicLayer.User
             _userManager = userManager;
         }
 
-        public async Task<LoginUserCommandResult> ExecuteAsync(LoginUserCommand command)
+        public async Task<LoginUserCommandResult> Handle(LoginUserCommand request, CancellationToken cancellationToken)
         {
-            var appUser = await _userManager.FindByEmailAsync(command.Email);
+            var appUser = await _userManager.FindByEmailAsync(request.Email);
             if (appUser == null)
             {
                 return null;
             }
 
-            var result = await _signInManager.PasswordSignInAsync(appUser, command.Password, false, false);
+            var result = await _signInManager.PasswordSignInAsync(appUser, request.Password, false, false);
             if (result.Succeeded)
             {
                 return new LoginUserCommandResult
                 {
-                    Email = command.Email,
+                    Email = request.Email,
                     IsSucceeded = true,
                     UserId = appUser.Id
                 };

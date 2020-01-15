@@ -1,25 +1,19 @@
-﻿using Microsoft.Extensions.Configuration;
-using SimpleApp.BusinessLogicLayer.Car.Command;
-using SimpleApp.Infrastructure.CQRS.Command;
-using SimpleApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using MediatR;
+using Microsoft.Extensions.Configuration;
 
 namespace SimpleApp.BusinessLogicLayer.Services
 {
     public class CarService
     {
         private readonly string _photosPath;
-        private readonly ICommandDispatcher _commandDispatcher;
+        private readonly IMediator _mediator;
 
         public CarService(
             IConfiguration configuration,
-            ICommandDispatcher commandDispatcher)
+            IMediator mediator)
         {
-            _commandDispatcher = commandDispatcher;
             _photosPath = configuration.GetValue<string>("PhtotPath");
+            _mediator = mediator;
         }
     }
 }

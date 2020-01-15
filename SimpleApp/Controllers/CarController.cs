@@ -1,25 +1,27 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SimpleApp.BusinessLogicLayer.Car.Command;
-using SimpleApp.Infrastructure.CQRS.Command;
+using SimpleApp.BusinessLogicLayer.Queries;
 using SimpleApp.Models;
 
-namespace SimpleApp.Controllers.Admin
+namespace SimpleApp.Controllers
 {
-    [Route("api/admin/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class CarController : ControllerBase
     {
-        private readonly ICommandDispatcher _commandDispatcher;
+        private readonly IMediator _mediatr;
 
-        public CarController(ICommandDispatcher commandDispatcher)
+        public CarController(IMediator mediatr)
         {
-            _commandDispatcher = commandDispatcher;
+            _mediatr = mediatr;
         }
 
+
         [HttpPost]
-        [Route("create-car")]
+        [Route("admin/create-car")]
         public async Task<ActionResult<AddCarCommandResult>> CreateCarAsync([FromBody]CarDto request)
         {
             var command = new AddCarCommand
@@ -29,9 +31,20 @@ namespace SimpleApp.Controllers.Admin
                 Model = request.Model,
                 ProductionDate = request.ProductionDate
             };
-            var result = await _commandDispatcher.ExecuteAsync<AddCarCommand, AddCarCommandResult>(command);
+            var result = await _mediatr.Send(command);
 
             return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("cars")]
+        public async Task<ActionResult<List<CarDto>>> GetCars()
+        {
+            var query = new GetCarsQuery();
+
+            var result = await _mediatr.Send(query);
+
+            return Ok(result.Cars);
         }
     }
 }

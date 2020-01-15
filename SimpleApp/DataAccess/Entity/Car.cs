@@ -13,6 +13,6 @@ namespace SimpleApp.DataAccess.Entity
         [Column(TypeName = "Date")]
         public DateTime ProductionDate { get; set; }
         public double Mileage { get; set; }
-        public string FilePath { get; set; }
+        //public string FilePath { get; set; }
     }
 }

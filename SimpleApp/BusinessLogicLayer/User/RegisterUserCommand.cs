@@ -1,26 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using SimpleApp.DataAccess.Entity;
-using SimpleApp.Infrastructure.CQRS.Command;
 
 namespace SimpleApp.BusinessLogicLayer.User
 {
-    public class RegisterUserCommand : ICommand
+    public class RegisterUserCommand : IRequest<RegisterUserCommandResult>
     {
         public string Email { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
     }
 
-    public class RegisterUserCommandResult : ICommandResult
+    public class RegisterUserCommandResult
     {
         public bool Result { get; set; }
     }
 
-    public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, RegisterUserCommandResult>
+    public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, RegisterUserCommandResult>
     {
         private readonly UserManager<ApplicationUser> _userManager;
 
@@ -29,15 +27,15 @@ namespace SimpleApp.BusinessLogicLayer.User
             _userManager = userManager;
         }
 
-        public async Task<RegisterUserCommandResult> ExecuteAsync(RegisterUserCommand command)
+        public async Task<RegisterUserCommandResult> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
             var user = new ApplicationUser
             {
-                Email = command.Email,
-                UserName = command.Email
+                Email = request.Email,
+                UserName = request.Email
             };
 
-            user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, command.Password);
+            user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, request.Password);
             var result = await _userManager.CreateAsync(user);
             return new RegisterUserCommandResult { Result = result.Succeeded };
         }

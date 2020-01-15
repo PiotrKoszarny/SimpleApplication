@@ -1,6 +1,4 @@
-﻿using GreenPipes;
-using MassTransit;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
@@ -9,12 +7,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
 using SimpleApp.DataAccess;
 using SimpleApp.DataAccess.Entity;
-using SimpleApp.Infrastructure.CQRS;
-using SimpleApp.Infrastructure.CQRS.Command;
-using SimpleApp.Infrastructure.CQRS.Query;
-using SimpleApp.IOC;
-using Swashbuckle.AspNetCore.Swagger;
 using System;
+using MediatR;
+using System.Reflection;
 
 namespace SimpleApp
 {
@@ -31,15 +26,13 @@ namespace SimpleApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<SimpleDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("SimpleDbConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("TargerDatabase")));
 
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
                     .AddEntityFrameworkStores<SimpleDbContext>()
                     .AddDefaultTokenProviders();
 
-            //services.RegisterMassTransit();
 
-            services.AddAuthenticationExtension(Configuration);
             services.AddMvc();
 
             services.AddCors(options => options.AddPolicy("AllowAll",
@@ -50,7 +43,8 @@ namespace SimpleApp
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
 
-            services.RegisterCqrsHandler();
+            // MediatR
+            services.AddMediatR(Assembly.GetExecutingAssembly());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

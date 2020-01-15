@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using MediatR;
 using Microsoft.Extensions.Configuration;
 using SimpleApp.DataAccess;
-using SimpleApp.Infrastructure.CQRS.Command;
 using SimpleApp.Models;
 
 namespace SimpleApp.BusinessLogicLayer.Car.Command
 {
-    public class AddCarCommand : ICommand
+    public class AddCarCommand : IRequest<AddCarCommandResult>
     {
         public string Brand { get; set; }
         public string Model { get; set; }
@@ -20,7 +20,7 @@ namespace SimpleApp.BusinessLogicLayer.Car.Command
         public IEnumerable<ImgFileDto> Photos { get; set; }
     }
 
-    public class AddCarCommandResult : ICommandResult
+    public class AddCarCommandResult
     {
         public int CarId { get; set; }
         public string Brand { get; set; }
@@ -29,7 +29,7 @@ namespace SimpleApp.BusinessLogicLayer.Car.Command
         public double Mileage { get; set; }
     }
 
-    public class AddCarCommanHandler : ICommandHandler<AddCarCommand, AddCarCommandResult>
+    public class AddCarCommanHandler : IRequestHandler<AddCarCommand, AddCarCommandResult>
     {
         private readonly SimpleDbContext _dbContext;
         private readonly string _photosPath;
@@ -39,29 +39,29 @@ namespace SimpleApp.BusinessLogicLayer.Car.Command
             IConfiguration configuration)
         {
             _dbContext = dbContext;
-            _photosPath = configuration.GetValue<string>("PhtotPath");
+            _photosPath = configuration.GetValue<string>("PhotoPath");
 
         }
-
-        public async Task<AddCarCommandResult> ExecuteAsync(AddCarCommand command)
+        
+        public async Task<AddCarCommandResult> Handle(AddCarCommand request, CancellationToken cancellationToken)
         {
             var car = new DataAccess.Entity.Car
             {
-                Brand = command.Brand,
-                Mileage = command.Mileage,
-                Model = command.Model,
-                ProductionDate = command.ProductionDate
+                Brand = request.Brand,
+                Mileage = request.Mileage,
+                Model = request.Model,
+                ProductionDate = request.ProductionDate
             };
 
             await _dbContext.AddAsync(car);
 
-            car.FilePath = $@"{_photosPath}/{car.CarId}";
+            //car.FilePath = $@"{_photosPath}/{car.CarId}";
 
 
-            foreach (var item in command.Photos)
-            {
-                System.IO.File.WriteAllBytes(car.FilePath, item.Value);
-            }
+            //foreach (var item in request.Photos)
+            //{
+            //    System.IO.File.WriteAllBytes(car.FilePath, item.Value);
+            //}
 
             await _dbContext.SaveChangesAsync();
 
