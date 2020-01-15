@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthenticationService } from '../services/authentication.service';
-import { User } from '../base/models/User';
+import { AccountService, UserLoginDto } from '../api/base';
 
 @Component({
   selector: 'app-sign-in',
@@ -13,7 +12,7 @@ export class SignInComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private userService: AuthenticationService
+    private accountService: AccountService
   ) { }
 
   ngOnInit() {
@@ -26,11 +25,11 @@ export class SignInComponent implements OnInit {
   private get form() { return this.signInForm.controls }
 
   async signIn() {
-    const user = <User>{
+    const user = <UserLoginDto>{
       email: this.form.email.value,
       password: this.form.password.value
     }
 
-    const result = await this.userService.signIn(user);
+    const result = await this.accountService.postSignIn(user);
   }
 }

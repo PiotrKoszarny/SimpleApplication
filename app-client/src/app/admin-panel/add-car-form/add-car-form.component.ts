@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { CarService } from '../services/car.service';
-import { ImgFile } from 'src/app/base/models/ImgFile';
-import { AddCarDto } from 'src/app/base/models/AddCarDto';
+import { CarService, CarDto, ImgFileDto } from 'src/app/api/base';
 
 @Component({
   selector: 'app-add-car-form',
@@ -11,7 +9,7 @@ import { AddCarDto } from 'src/app/base/models/AddCarDto';
 })
 export class AddCarFormComponent implements OnInit {
   addCarForm: FormGroup;
-  imgFiles: ImgFile[] = [];
+  imgFiles: ImgFileDto[] = [];
   constructor(
     private formBuilder: FormBuilder,
     private carService: CarService
@@ -32,14 +30,14 @@ export class AddCarFormComponent implements OnInit {
   }
 
   public async onSubmit() {
-    const car = <AddCarDto>{
+    const car = <CarDto>{
       brand: this.addCarForm.get('brand').value,
       model: this.addCarForm.get('model').value,
       productionDate: this.addCarForm.get('productionDate').value,
       mileage: parseInt(this.addCarForm.get('mileage').value),
       photos: this.imgFiles,
     }
-    const result = await this.carService.addCar(car);
+    const result = await this.carService.postCreateCar(car);
     console.log(result);
   }
 

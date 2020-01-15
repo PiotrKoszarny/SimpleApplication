@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService } from '../services/authentication.service';
-import { User } from '../base/models/User';
 import { ToastrService } from 'ngx-toastr';
+import { AccountService, RegisterViewModel } from '../api/base';
 
 @Component({
   selector: 'app-registration',
@@ -14,7 +13,7 @@ export class RegistrationComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private userService: AuthenticationService,
+    private accountService: AccountService,
     private toastr: ToastrService
   ) { }
 
@@ -28,12 +27,12 @@ export class RegistrationComponent implements OnInit {
   }
 
   public async register() {
-    const register = <User>{
+    const register = <RegisterViewModel>{
       email: this.registerForm.get('email').value,
       password: this.registerForm.get('password').value,
       confirmPassword: this.registerForm.get('confirmPassword').value,
     }
-    const result = await this.userService.register(register)
+    const result = await this.accountService.postRegister(register)
     if (result) {
       this.toastr.success('Registration successful')
     } else {
