@@ -1,5 +1,5 @@
 import { Component, OnInit, HostBinding, Output, EventEmitter } from '@angular/core';
-import { ImgFileDto } from 'src/app/api/base';
+import { ImgFileDto } from 'base';
 
 @Component({
   selector: 'app-drag-file',
@@ -26,7 +26,7 @@ export class DragFileComponent implements OnInit {
         const file = <ImgFileDto>{
           fileName: element.name,
           fileType: element.type,
-          value: reader.result.toString().split(',')[1],
+          photoBytes: reader.result.toString().split(',')[1],
         }
         this.files.push(file)
         this.fileUploaded.emit(this.files);

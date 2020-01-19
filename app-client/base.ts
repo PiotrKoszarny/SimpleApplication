@@ -25,7 +25,7 @@ export interface UserLoginResultDto {
 export interface ImgFileDto {
     fileName: string;
     fileType: string;
-    value: string;
+    photoBytes: string;
 }
 
 export interface CarDto {

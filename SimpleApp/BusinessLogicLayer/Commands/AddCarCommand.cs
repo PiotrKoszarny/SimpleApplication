@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using SimpleApp.DataAccess;
+using SimpleApp.DataAccess.Entity;
 using SimpleApp.Models;
 
 namespace SimpleApp.BusinessLogicLayer.Car.Command
@@ -17,7 +20,7 @@ namespace SimpleApp.BusinessLogicLayer.Car.Command
         public double Mileage { get; set; }
         public string CarPhotoPath { get; set; }
         public byte[] CarPhoto { get; set; }
-        public IEnumerable<ImgFileDto> Photos { get; set; }
+        public List<string> PhotoNames { get; set; }
     }
 
     public class AddCarCommandResult
@@ -32,17 +35,14 @@ namespace SimpleApp.BusinessLogicLayer.Car.Command
     public class AddCarCommanHandler : IRequestHandler<AddCarCommand, AddCarCommandResult>
     {
         private readonly SimpleDbContext _dbContext;
-        private readonly string _photosPath;
 
         public AddCarCommanHandler(
-            SimpleDbContext dbContext,
-            IConfiguration configuration)
+            SimpleDbContext dbContext)
         {
             _dbContext = dbContext;
-            _photosPath = configuration.GetValue<string>("PhotoPath");
 
         }
-        
+
         public async Task<AddCarCommandResult> Handle(AddCarCommand request, CancellationToken cancellationToken)
         {
             var car = new DataAccess.Entity.Car
@@ -55,13 +55,12 @@ namespace SimpleApp.BusinessLogicLayer.Car.Command
 
             await _dbContext.AddAsync(car);
 
-            //car.FilePath = $@"{_photosPath}/{car.CarId}";
-
-
-            //foreach (var item in request.Photos)
-            //{
-            //    System.IO.File.WriteAllBytes(car.FilePath, item.Value);
-            //}
+            var photos = request.PhotoNames.Select(name => new Photo
+            {
+                Car = car,
+                FileName = name
+            });
+            await _dbContext.AddRangeAsync(photos);
 
             await _dbContext.SaveChangesAsync();
 
@@ -71,7 +70,7 @@ namespace SimpleApp.BusinessLogicLayer.Car.Command
                 Model = car.Model,
                 ProductionDate = car.ProductionDate,
                 Brand = car.Brand,
-                CarId = car.CarId
+                CarId = car.Id
             };
         }
     }

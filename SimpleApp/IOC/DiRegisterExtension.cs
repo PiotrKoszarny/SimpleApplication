@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using GreenPipes;
 using MassTransit;
 using Microsoft.Extensions.Hosting;
+using SimpleApp.BusinessLogicLayer.Services;
 
 namespace SimpleApp.IOC
 {
-    public static class QueueRegister
+    public static class DiRegisterExtension
     {
         public static void RegisterMassTransit(this IServiceCollection serviceCollection)
         {
@@ -23,6 +23,16 @@ namespace SimpleApp.IOC
                     ));
                 serviceCollection.AddSingleton<IHostedService, BusService.BusService>();
             });
+        }
+
+
+
+        public static IServiceCollection RegisterServices(this IServiceCollection services)
+        {
+            services.AddScoped<ICarService, CarService>();
+            services.AddScoped<IFileService, FileService>();
+
+            return services;
         }
     }
 }

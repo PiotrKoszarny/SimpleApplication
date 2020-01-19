@@ -20,7 +20,7 @@ namespace SimpleApp.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CarDto>>> GetOffers()
+        public async Task<ActionResult<IEnumerable<AddCarDto>>> GetOffers()
         {
             var query = new GetCarsQuery();
             var result = await _mediator.Send(query);

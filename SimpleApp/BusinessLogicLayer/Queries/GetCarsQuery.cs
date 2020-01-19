@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SimpleApp.DataAccess;
+using SimpleApp.DataAccess.Entity;
 using SimpleApp.Models;
 using System;
 using System.Collections.Generic;
@@ -10,17 +11,12 @@ using System.Threading.Tasks;
 
 namespace SimpleApp.BusinessLogicLayer.Queries
 {
-    public class GetCarsQuery : IRequest<GetCarsQueryResult>
+    public class GetCarsQuery : IRequest<List<GetCarDto>>
     {
     }
 
-    public class GetCarsQueryResult
-    {
-        public IEnumerable<CarDto> Cars { get; set; }
-    }
 
-
-    public class GetCarsQueryHandler : IRequestHandler<GetCarsQuery, GetCarsQueryResult>
+    public class GetCarsQueryHandler : IRequestHandler<GetCarsQuery, List<GetCarDto>>
     {
         private readonly SimpleDbContext _dbContext;
 
@@ -29,18 +25,22 @@ namespace SimpleApp.BusinessLogicLayer.Queries
             _dbContext = dbContext;
         }
 
-        public async Task<GetCarsQueryResult> Handle(GetCarsQuery request, CancellationToken cancellationToken)
+        public async Task<List<GetCarDto>> Handle(GetCarsQuery request, CancellationToken cancellationToken)
         {
-            var result = await _dbContext.Cars.Select(x => new CarDto
-            {
-                Brand = x.Brand,
-                CarId = x.CarId,
-                Mileage = x.Mileage,
-                Model = x.Model,
-                ProductionDate = x.ProductionDate
-            }).ToListAsync();
+            var result = await (from c in _dbContext.Cars
+                                select new GetCarDto
+                                {
+                                    Brand = c.Brand,
+                                    CarId = c.Id,
+                                    Mileage = c.Mileage,
+                                    Model = c.Model,
+                                    ProductionDate = c.ProductionDate,
+                                    PhotoUrls = c.Photos.Select(x=>x.FileName).ToList()
+                                })
+                                 .ToListAsync();
+                
 
-            return new GetCarsQueryResult { Cars = result };
+            return result;
         }
     }
 }

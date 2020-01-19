@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { CarService, CarDto, ImgFileDto } from 'src/app/api/base';
+import { ImgFileDto, CarService, CarDto } from 'base';
 
 @Component({
   selector: 'app-add-car-form',
@@ -37,6 +37,8 @@ export class AddCarFormComponent implements OnInit {
       mileage: parseInt(this.addCarForm.get('mileage').value),
       photos: this.imgFiles,
     }
+    console.log(car);
+    
     const result = await this.carService.postCreateCar(car);
     console.log(result);
   }
