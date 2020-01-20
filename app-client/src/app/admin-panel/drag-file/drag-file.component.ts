@@ -1,5 +1,5 @@
 import { Component, OnInit, HostBinding, Output, EventEmitter } from '@angular/core';
-import { ImgFileDto } from 'base';
+import { AddImgFileDto } from 'base';
 
 @Component({
   selector: 'app-drag-file',
@@ -7,14 +7,14 @@ import { ImgFileDto } from 'base';
   styleUrls: ['./drag-file.component.scss']
 })
 export class DragFileComponent implements OnInit {
-  @Output() fileUploaded = new EventEmitter<ImgFileDto[]>();
+  @Output() fileUploaded = new EventEmitter<AddImgFileDto[]>();
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  files: ImgFileDto[] = [];
+  files: AddImgFileDto[] = [];
 
   uploadFile(event) {
 
@@ -23,7 +23,7 @@ export class DragFileComponent implements OnInit {
       const element = event[index];
       reader.readAsDataURL(element);
       reader.onloadend = () => {
-        const file = <ImgFileDto>{
+        const file = <AddImgFileDto>{
           fileName: element.name,
           fileType: element.type,
           photoBytes: reader.result.toString().split(',')[1],

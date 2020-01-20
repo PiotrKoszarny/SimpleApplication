@@ -8,4 +8,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app-client';
+  // constructor() {
+  //   generate('http://localhost:65278/swagger/v1/swagger.json')
+  // }
 }

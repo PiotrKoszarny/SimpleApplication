@@ -36,7 +36,7 @@ namespace SimpleApp.Controllers
 
         [HttpGet]
         [Route("cars")]
-        public async Task<ActionResult<List<AddCarDto>>> GetCars()
+        public async Task<ActionResult<List<GetCarDto>>> GetCars()
         {
             var query = new GetCarsQuery();
 

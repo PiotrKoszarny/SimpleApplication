@@ -25,7 +25,6 @@ export class AddCarFormComponent implements OnInit {
   }
 
   onFileUploaded(event) {
-    console.log(event);
     this.imgFiles = event;
   }
 
@@ -37,10 +36,8 @@ export class AddCarFormComponent implements OnInit {
       mileage: parseInt(this.addCarForm.get('mileage').value),
       photos: this.imgFiles,
     }
-    console.log(car);
     
     const result = await this.carService.postCreateCar(car);
-    console.log(result);
   }
 
 }
