@@ -49,9 +49,7 @@ export interface GetCarDto {
     carId: number;
     brand: string;
     model: string;
-    productionDate: string;
-    mileage: number;
-    photoUrls: string;
+    photoUrl: string;
 }
 
 @Injectable({
@@ -64,14 +62,14 @@ export class AccountService {
         private httpClient: HttpClient
     ) { }
 
-    public async postRegister(data: RegisterViewModel): Promise<any> {
+    public async postRegister(data: RegisterViewModel): Promise<boolean> {
 
-        return this.httpClient.post<any>(this.apiBaseUrl + '/Account/register', data).toPromise();
+        return this.httpClient.post<boolean>(this.apiBaseUrl + '/Account/register', data).toPromise();
     }
 
-    public async postSignIn(data: UserLoginDto): Promise<any> {
+    public async postSignIn(data: UserLoginDto): Promise<UserLoginResultDto> {
 
-        return this.httpClient.post<any>(this.apiBaseUrl + '/Account/sign-in', data).toPromise();
+        return this.httpClient.post<UserLoginResultDto>(this.apiBaseUrl + '/Account/sign-in', data).toPromise();
     }
 
 }
@@ -86,12 +84,12 @@ export class CarService {
         private httpClient: HttpClient
     ) { }
 
-    public async postCreateCar(data: AddCarDto): Promise<any> {
+    public async postCreateCar(data: AddCarDto): Promise<AddCarCommandResult> {
 
-        return this.httpClient.post<any>(this.apiBaseUrl + '/Car/admin/create-car', data).toPromise();
+        return this.httpClient.post<AddCarCommandResult>(this.apiBaseUrl + '/Car/admin/create-car', data).toPromise();
     }
 
-    public async getCars(): Promise<void |GetCarDto[]> {
+    public async getCars(): Promise<GetCarDto[]> {
         return this.httpClient.get<GetCarDto[]>(this.apiBaseUrl + '/Car/cars').toPromise();
     }
 
@@ -107,8 +105,8 @@ export class ProductService {
         private httpClient: HttpClient
     ) { }
 
-    public async getProduct(): Promise<any> {
-        return this.httpClient.get<any>(this.apiBaseUrl + '/Product').toPromise();
+    public async getProduct(): Promise<AddCarDto[]> {
+        return this.httpClient.get<AddCarDto[]>(this.apiBaseUrl + '/Product').toPromise();
     }
 
 }

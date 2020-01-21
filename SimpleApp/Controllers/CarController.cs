@@ -29,7 +29,7 @@ namespace SimpleApp.Controllers
         [Route("admin/create-car")]
         public async Task<ActionResult<AddCarCommandResult>> CreateCarAsync([FromBody]AddCarDto request)
         {
-            var result = await _carService.AddCar(request);
+            var result = await _carService.AddCarAsync(request);
 
             return Ok(result);
         }
@@ -38,9 +38,14 @@ namespace SimpleApp.Controllers
         [Route("cars")]
         public async Task<ActionResult<List<GetCarDto>>> GetCars()
         {
-            var query = new GetCarsQuery();
+            return Ok(await _carService.GetCarsAsync());
+        }
 
-            var result = await _mediatr.Send(query);
+        [HttpGet]
+        [Route("car/{id}")]
+        public async Task<ActionResult<GetCarDetailsDto>> GetCar(int id)
+        {
+            var result = await _carService.GetCarAsync(id);
 
             return Ok(result);
         }

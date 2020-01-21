@@ -8,6 +8,8 @@ import { CarService, GetCarDto } from 'base';
 })
 export class GridLayoutComponent implements OnInit {
 
+  cars: GetCarDto[] = [];
+
   constructor(
     private carService: CarService
   ) { }
@@ -18,8 +20,6 @@ export class GridLayoutComponent implements OnInit {
 
 
   async getCars() {
-    const cars = await this.carService.getCars();
-    console.log(cars);
-
+    this.cars = await this.carService.getCars();
   }
 }

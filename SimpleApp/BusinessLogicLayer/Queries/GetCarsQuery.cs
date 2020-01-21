@@ -32,13 +32,11 @@ namespace SimpleApp.BusinessLogicLayer.Queries
                                 {
                                     Brand = c.Brand,
                                     CarId = c.Id,
-                                    Mileage = c.Mileage,
                                     Model = c.Model,
-                                    ProductionDate = c.ProductionDate,
-                                    PhotoUrls = c.Photos.Select(x=>x.FileName).ToList()
+                                    PhotoUrl = c.Photos.FirstOrDefault().FileName
                                 })
                                  .ToListAsync();
-                
+
 
             return result;
         }

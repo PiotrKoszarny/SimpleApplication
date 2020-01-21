@@ -12,8 +12,9 @@ import { SignInComponent } from './signIn/sign-in.component';
 import { HomeComponent } from './home/home.component';
 import { NavComponent } from './nav/nav.component';
 import { ToastrModule } from 'ngx-toastr';
-import { CarElementComponent } from './home/car-element/car-element.component';
-import { GridLayoutComponent } from './home/grid-layout/grid-layout.component';
+import { CarElementComponent } from './car/car-element/car-element.component';
+import { GridLayoutComponent } from './car/grid-layout/grid-layout.component';
+import { CarDetailsComponent } from './car/car-details/car-details.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { GridLayoutComponent } from './home/grid-layout/grid-layout.component';
     NavComponent,
     CarElementComponent,
     GridLayoutComponent,
+    CarDetailsComponent,
   ],
   imports: [
     BrowserModule,

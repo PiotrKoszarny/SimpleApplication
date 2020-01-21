@@ -1,0 +1,8 @@
+<div class="card-element pointer" [routerLink]="['/car-details', car.carId]">
+    <div >
+        <img src="{{baseUrl}}/{{car.carId}}/{{car.photoUrl}}">
+    </div>
+    <div class="card-description">
+        <p>{{car.brand}} {{car.model}}</p>
+    </div>
+</div>

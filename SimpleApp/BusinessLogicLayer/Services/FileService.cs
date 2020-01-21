@@ -17,34 +17,24 @@ namespace SimpleApp.BusinessLogicLayer.Services
     public class FileService : IFileService
     {
         private readonly IFileSettings _fileSettings;
-        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public FileService(IFileSettings fileSettings, IHostingEnvironment hostingEnvironment)
+        public FileService(IFileSettings fileSettings)
         {
             _fileSettings = fileSettings;
-            _hostingEnvironment = hostingEnvironment;
         }
 
         public void SavePhotos(IEnumerable<AddImgFileDto> photos, int carId)
         {
-            try
+            foreach (var item in photos)
             {
-                foreach (var item in photos)
+                var path = $"{_fileSettings.PhotoPath}\\{carId}";
+                using (var stream = new MemoryStream(item.PhotoBytes))
+                using (var image = Image.FromStream(stream))
                 {
-                    var path = $"{_fileSettings.PhotoPath}\\{carId}";
-                    using (var stream = new MemoryStream(item.PhotoBytes))
-                    using (var image = Image.FromStream(stream))
-                    {
-                        if (!Directory.Exists(path))
-                            Directory.CreateDirectory(path);
-                        image.Save($"{path}\\{item.FileName}", ImageFormat.Png);
-                    }
+                    if (!Directory.Exists(path))
+                        Directory.CreateDirectory(path);
+                    image.Save($"{path}\\{item.FileName}", ImageFormat.Png);
                 }
-            }
-            catch (Exception ex)
-            {
-
-                throw;
             }
         }
     }
