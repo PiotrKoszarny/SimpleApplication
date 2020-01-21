@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CarService, GetCarDto } from 'base';
+import { CarService, GetCarDto } from 'src/app/api/base';
 
 @Component({
   selector: 'app-grid-layout',

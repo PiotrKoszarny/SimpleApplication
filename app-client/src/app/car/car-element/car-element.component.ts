@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { GetCarDto } from 'base';
+import { GetCarDto } from 'src/app/api/base';
 import { environment } from 'src/environments/environment';
 
 @Component({

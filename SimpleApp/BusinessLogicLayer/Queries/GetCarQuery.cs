@@ -30,6 +30,7 @@ namespace SimpleApp.BusinessLogicLayer.Queries
         public async Task<GetCarDetailsDto> Handle(GetCarQuery request, CancellationToken cancellationToken)
         {
             return await (from c in _dbContext.Cars
+                          where c.Id == request.CarId
                           select new GetCarDetailsDto
                           {
                               Brand = c.Brand,

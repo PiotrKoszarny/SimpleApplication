@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { AccountService, RegisterViewModel } from 'base';
+import { AccountService, RegisterViewModel } from 'src/app/api/base';
 
 @Component({
   selector: 'app-registration',

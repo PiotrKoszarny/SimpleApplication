@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import {  CarService, AddImgFileDto, AddCarDto } from 'base';
+import {  CarService, AddImgFileDto, AddCarDto } from 'src/app/api/base';
 
 @Component({
   selector: 'app-add-car-form',

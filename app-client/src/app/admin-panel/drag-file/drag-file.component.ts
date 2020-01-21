@@ -1,5 +1,5 @@
 import { Component, OnInit, HostBinding, Output, EventEmitter } from '@angular/core';
-import { AddImgFileDto } from 'base';
+import { AddImgFileDto } from 'src/app/api/base';
 
 @Component({
   selector: 'app-drag-file',

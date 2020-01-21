@@ -52,6 +52,15 @@ export interface GetCarDto {
     photoUrl: string;
 }
 
+export interface GetCarDetailsDto {
+    carId: number;
+    brand: string;
+    model: string;
+    productionDate: string;
+    mileage: number;
+    photoUrls: string;
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -91,6 +100,10 @@ export class CarService {
 
     public async getCars(): Promise<GetCarDto[]> {
         return this.httpClient.get<GetCarDto[]>(this.apiBaseUrl + '/Car/cars').toPromise();
+    }
+
+    public async getCar(id: number): Promise<GetCarDetailsDto> {
+        return this.httpClient.get<GetCarDetailsDto>(this.apiBaseUrl + '/Car/car/' + id).toPromise();
     }
 
 }
