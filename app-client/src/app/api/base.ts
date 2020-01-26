@@ -61,6 +61,10 @@ export interface GetCarDetailsDto {
     photoUrls: string;
 }
 
+export interface Message {
+    payload: string;
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -104,6 +108,23 @@ export class CarService {
 
     public async getCar(id: number): Promise<GetCarDetailsDto> {
         return this.httpClient.get<GetCarDetailsDto>(this.apiBaseUrl + '/Car/car/' + id).toPromise();
+    }
+
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class ChatService {
+    apiBaseUrl = environment.apiBaseUrl;
+
+    constructor(
+        private httpClient: HttpClient
+    ) { }
+
+    public async postSendMessage(data: Message): Promise<any> {
+
+        return this.httpClient.post<any>(this.apiBaseUrl + '/Chat/send-message', data).toPromise();
     }
 
 }

@@ -12,7 +12,6 @@ namespace SimpleApp.DataAccess
         public static void SeedData(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Car>().HasData(GetCars());
-            modelBuilder.Entity<Photo>().HasData(GetPhotos());
         }
 
         private static Car[] GetCars()
@@ -122,16 +121,6 @@ namespace SimpleApp.DataAccess
                 id++;
             }
             return cars;
-        }
-
-        private Photo[] GetPhotos()
-        {
-            return new Photo[] {
-                new Photo{
-                    CarId = 1,
-                    FileName = "template.png",
-                }
-            };
         }
 
         private static int GetRandomMileage()

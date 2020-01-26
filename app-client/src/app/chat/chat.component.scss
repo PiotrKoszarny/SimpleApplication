@@ -1,0 +1,28 @@
+.chat-popup{
+    position: fixed;
+    width: 200px;
+    right: 0;
+    bottom:0;
+    z-index: 9;
+    border: black 1px solid;
+}
+
+.chat-open{
+    height: 300px;
+    
+    .caller-header{
+        padding: 3px;        
+    }
+
+    .conversation-box{
+        background-color: palegreen;
+        height: 235px;
+    }
+
+    .message-box{
+        height: 20px;
+        display: inline-block;
+        width: 100%;
+        background-color: red;
+    }
+}

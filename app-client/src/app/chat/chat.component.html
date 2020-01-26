@@ -1,0 +1,19 @@
+<div class="chat-popup">
+    <div class="chat-open">
+        <div class="caller-header">
+            <span>klient</span>
+        </div>
+        <div class="conversation-box">
+            ... rozmowa
+        </div>
+        <div class="message-box">
+            <input
+                matInput
+                placeholder="Type message..."
+                [formControl]="messageControl"
+            >
+            <button (click)="sendMessage()">send</button>
+        </div>
+
+    </div>
+</div>

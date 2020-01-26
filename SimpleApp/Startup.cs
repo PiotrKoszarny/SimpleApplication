@@ -16,6 +16,8 @@ using SimpleApp.BusinessLogicLayer.Services;
 using SimpleApp.IOC;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+using Microsoft.Owin;
+using SimpleApp.DI;
 
 namespace SimpleApp
 {
@@ -41,8 +43,11 @@ namespace SimpleApp
             services.AddMvc();
             services.AddOptions();
 
-            services.AddCors(options => options.AddPolicy("AllowAll",
-                p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+            services.AddCors(options => options.AddPolicy("AllowAll", builder =>
+                builder.AllowAnyMethod()
+                .AllowAnyHeader()
+                .WithOrigins("http://localhost:4200")
+                .AllowCredentials()));
 
             services.AddSwaggerGen(c =>
             {
@@ -55,6 +60,10 @@ namespace SimpleApp
             // MediatR
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
+            //SignalR
+            services.RegisterSignalR();
+
+            // Settings
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
             services.AddSingleton<IFileSettings>(x => x.GetService<IOptions<AppSettings>>().Value);
@@ -102,6 +111,8 @@ namespace SimpleApp
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
                 c.RoutePrefix = string.Empty;
             });
+
+            app.ConfigurationSignlarR();
         }
     }
 }

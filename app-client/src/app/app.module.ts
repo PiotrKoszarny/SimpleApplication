@@ -15,6 +15,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { CarElementComponent } from './car/car-element/car-element.component';
 import { GridLayoutComponent } from './car/grid-layout/grid-layout.component';
 import { CarDetailsComponent } from './car/car-details/car-details.component';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { CarDetailsComponent } from './car/car-details/car-details.component';
     CarElementComponent,
     GridLayoutComponent,
     CarDetailsComponent,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,
