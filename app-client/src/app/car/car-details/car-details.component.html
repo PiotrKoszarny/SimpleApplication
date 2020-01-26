@@ -1,1 +1,32 @@
-<p>car-details works!</p>
+<section class="container">
+    <div class="main-container">
+        <div class="main-left">
+            <div class="gallery">
+                <img src="{{baseUrl}}/{{car.carId}}/{{car.photoUrls[0]}}">
+            </div>
+            <div class="offer-params">
+                <ul class="offer-params-list">
+                    <li class="offer-params-item">
+                        <span class="offer-params-label">Brand:</span>
+                        <span class="offer-params-value">{{car.brand}}</span>
+                    </li>
+                    <li class="offer-params-item">
+                        <span class="offer-params-label">Model:</span>
+                        <span class="offer-params-value">{{car.model}}</span>
+                    </li>
+                    <li class="offer-params-item">
+                        <span class="offer-params-label">Production date:</span>
+                        <span class="offer-params-value">{{car.productionDate}}</span>
+                    </li>
+                    <li class="offer-params-item">
+                        <span class="offer-params-label">Mileage:</span>
+                        <span class="offer-params-value">{{car.mileage}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="main-right">
+            description
+        </div>
+    </div>
+</section>

@@ -16,6 +16,7 @@ namespace SimpleApp.DataAccess
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.SeedData();
         }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }

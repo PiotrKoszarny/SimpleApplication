@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CarService, GetCarDetailsDto } from 'src/app/api/base';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-car-details',
@@ -9,6 +10,7 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 })
 export class CarDetailsComponent implements OnInit {
   car: GetCarDetailsDto;
+  public baseUrl = environment.baseUrl;
 
   constructor(
     private route: ActivatedRoute,
@@ -21,7 +23,6 @@ export class CarDetailsComponent implements OnInit {
     this.car = await this.carService.getCar(Number(carId));
 
     console.log(this.car);
-
+    
   }
-
 }

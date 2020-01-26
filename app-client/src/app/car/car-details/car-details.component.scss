@@ -1,0 +1,28 @@
+.offer-params{
+    .offer-params-list{
+        display: block;
+        list-style: none;
+
+        .offer-params-item{
+            width: 50%;
+            margin: 10px 0px;
+            font-size: 0.9em;
+
+            .offer-params-label{
+                color: gray;
+            }
+
+            .offer-params-value{
+                color: black;
+            }
+        }
+    }
+}
+
+.gallery{
+    height: 300px;
+    
+    img{
+        height: 100%;
+    }
+}

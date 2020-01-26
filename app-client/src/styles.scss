@@ -16,3 +16,16 @@ body {
 .pointer{
     cursor: pointer;
 }
+
+.main-container{
+    width: 100%;
+    display: inline-flex;
+    .main-left{
+        width: 70%;
+        padding: 5px;
+    }
+    .main-right{
+        width: 30%;
+        padding: 5px;
+    }
+}
